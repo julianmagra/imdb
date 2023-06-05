@@ -1,7 +1,7 @@
 import { DataTypes, Sequelize, Model } from "sequelize";
 import db from "../db";
 
-class User extends Model {}
+class Rol extends Model {}
 
 Rol.init(
   {
@@ -15,7 +15,8 @@ Rol.init(
     // Other model options go here
     sequelize: db,
     modelName: "Rol",
+    // timestamps: false,
   }
 );
 
-console.log(User === sequelize.models.User); // true
+console.log(Rol === sequelize.models.Rol); // true
