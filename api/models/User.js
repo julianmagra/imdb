@@ -1,68 +1,26 @@
-import { DataTypes, Model } from "sequelize";
-import db from "../db";
+import { DataTypes } from "sequelize";
+import db from "../db/index.js";
+import Rol from "./Rol.js";
 
-class User extends Model {}
+const User = db.define("users", {
+  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+  username: { type: DataTypes.STRING },
+  password: { type: DataTypes.BOOLEAN, defaultValue: false },
+  firstName: { type: DataTypes.BOOLEAN, defaultValue: false },
+  lastName: { type: DataTypes.BOOLEAN, defaultValue: false },
+  email: { type: DataTypes.BOOLEAN, defaultValue: false },
+  age: { type: DataTypes.BOOLEAN, defaultValue: false },
+  gender: { type: DataTypes.BOOLEAN, defaultValue: false },
+});
 
-User.init(
-  {
-    // Model attributes are defined here
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    password: {
-      type: DataTypes.VIRTUAL,
-      allowNull: false,
-    },
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isAlpha: true,
-        len: [3, 100],
-      },
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isAlpha: true,
-        len: [3, 100],
-      },
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-      validate: {
-        isEmail: true,
-      },
-    },
-    age: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        isInt: true,
-      },
-    },
-    gender: {
-      type: DataTypes.ENUM,
-      values: ["male", "female"],
-      allowNull: false,
-    },
-    /* favoriteList: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: true,
-    }, */
-  },
-  {
-    // Other model options go here
-    sequelize: db, // We need to pass the connection instance
-    modelName: "User", // We need to choose the model name
-  }
-);
+User.hasOne(Rol, {
+  foreignKey: "rolId",
+  sourceKey: "id",
+});
 
-console.log(User === sequelize.models.User); // true
+Rol.belongsTo(User, {
+  foreignKey: "userId",
+  targetId: "id",
+});
 
-// USER hasone(FavoriteLIST)
-// Favorite list belongsto(USER)
+export default User;

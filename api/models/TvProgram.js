@@ -1,26 +1,15 @@
-import { DataTypes, Sequelize, Model } from "sequelize";
-import db from "../db";
+import { DataTypes } from "sequelize";
+import db from "../db/index.js";
 
-class TvProgram extends Model {}
+const TvProgram = db.define("tvPrograms", {
+  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+  title: { type: DataTypes.STRING },
+  release_date: { type: DataTypes.DATE },
+  genre: { type: DataTypes.STRING },
+  description: { type: DataTypes.STRING },
+  image: { type: DataTypes.STRING },
+  director: { type: DataTypes.STRING },
+  actors: { type: DataTypes.STRING },
+});
 
-TvProgram.init(
-  {
-    // Model attributes are defined here
-    title: DataTypes.STRING,
-    release_date: DataTypes.DATE,
-    genre: DataTypes.STRING,
-    rating: DataTypes.INTEGER,
-    description: DataTypes.STRING,
-    image: DataTypes.STRING,
-    director: DataTypes.STRING,
-    actors: DataTypes.STRING,
-  },
-  {
-    // Other model options go here
-    sequelize: db,
-    modelName: "TvProgram",
-    // timestamps: false,
-  }
-);
-
-console.log(TvProgram === sequelize.models.TvProgram); // true
+export default TvProgram;
