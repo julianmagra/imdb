@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import db from "../db/index.js";
+import Rating from "./Rating.js";
 
 const Movie = db.define("movies", {
   id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
@@ -12,5 +13,8 @@ const Movie = db.define("movies", {
   director: { type: DataTypes.STRING },
   actors: { type: DataTypes.STRING },
 });
+
+Movie.hasMany(Rating);
+Rating.belongsToMany(Movie);
 
 export default Movie;
