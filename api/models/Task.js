@@ -8,7 +8,3 @@ const Task = db.define("tasks", {
 });
 
 export default Task;
-
-//task y project no pertenecen al proyecto
-//falta testear que puedan agregarse valores
-//seedear datos

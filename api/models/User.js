@@ -17,10 +17,10 @@ User.hasOne(Rol, {
   foreignKey: "rolId",
   sourceKey: "id",
 });
-
+/* 
 Rol.belongsTo(User, {
   foreignKey: "userId",
   targetId: "id",
-});
+}); */
 
 export default User;

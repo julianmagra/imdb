@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import db from "../db/index.js";
 import Rating from "./Rating.js";
+import FavoriteMovieList from "./FavoriteMovie.js";
 
 const Movie = db.define("movies", {
   id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
@@ -16,5 +17,10 @@ const Movie = db.define("movies", {
 
 Movie.hasMany(Rating);
 Rating.belongsToMany(Movie);
+
+Movie.belongsToMany(FavoriteMovieList, {
+  foreignKey: "favoriteMovieListId",
+  targetId: "id",
+});
 
 export default Movie;

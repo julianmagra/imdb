@@ -3,17 +3,18 @@ import db from "../db/index.js";
 import TvProgram from "./TvProgram.js";
 
 // Evaluar esta tabla
-const FavoriteTv = db.define("favoriteTv", {
+const FavoriteTvListList = db.define("favoriteTvList", {
   tvPrograms: { type: DataTypes.ARRAY([DataTypes.STRING]) },
 });
 
-FavoriteTv.hasMany(TvProgram, {
-  foreignKey: "favoriteTvId",
+FavoriteTvList.hasMany(TvProgram, {
+  foreignKey: "favoriteTvListId",
   sourceKey: "id",
 });
-TvProgram.belongsTo(FavoriteTv, {
-  foreignKey: "favoriteTvId",
+
+TvProgram.belongsTo(FavoriteTvList, {
+  foreignKey: "favoriteTvListId",
   targetId: "id",
 });
 
-export default FavoriteTv;
+export default FavoriteTvListList;

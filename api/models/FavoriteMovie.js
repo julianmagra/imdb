@@ -1,19 +1,21 @@
 import { DataTypes } from "sequelize";
 import db from "../db/index.js";
 import Movie from "./Movie.js";
+import User from "./User.js";
 
 // Evaluar esta tabla
-const FavoriteMovie = db.define("favoriteMovie", {
+const FavoriteMovieList = db.define("favoriteMovieList", {
   movies: { type: DataTypes.ARRAY([DataTypes.STRING]) },
 });
 
-FavoriteMovie.hasMany(Movie, {
-  foreignKey: "favoriteMovieId",
+FavoriteMovieList.hasMany(Movie, {
+  foreignKey: "favoriteMovieListId",
   sourceKey: "id",
 });
-Movie.belongsTo(FavoriteMovie, {
-  foreignKey: "favoriteMovieId",
-  targetId: "id",
+
+FavoriteMovieList.belongsToMany(User, {
+  foreignKey: "favoriteMovieListId",
+  sourceKey: "id",
 });
 
-export default FavoriteMovie;
+export default FavoriteMovieList;
