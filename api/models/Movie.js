@@ -15,12 +15,4 @@ const Movie = db.define("movies", {
   actors: { type: DataTypes.STRING },
 });
 
-Movie.hasMany(Rating);
-Rating.belongsToMany(Movie);
-
-Movie.belongsToMany(FavoriteMovieList, {
-  foreignKey: "favoriteMovieListId",
-  targetId: "id",
-});
-
 export default Movie;

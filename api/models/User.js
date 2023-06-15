@@ -13,10 +13,6 @@ const User = db.define("users", {
   gender: { type: DataTypes.ENUM("male", "female"), allowNull: false },
 });
 
-User.hasOne(Rol, {
-  foreignKey: "rolId",
-  sourceKey: "id",
-});
 /* 
 Rol.belongsTo(User, {
   foreignKey: "userId",

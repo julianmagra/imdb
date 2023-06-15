@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import db from "../db/index.js";
 import TvProgram from "./TvProgram.js";
+import User from "./User.js";
 
 // Evaluar esta tabla
 const FavoriteTvListList = db.define("favoriteTvList", {
@@ -12,7 +13,7 @@ FavoriteTvList.hasMany(TvProgram, {
   sourceKey: "id",
 });
 
-TvProgram.belongsTo(FavoriteTvList, {
+TvProgram.belongsToMany(User, {
   foreignKey: "favoriteTvListId",
   targetId: "id",
 });

@@ -5,7 +5,7 @@ export const getUsers = async (req, res) => {
     const users = await User.findAll();
     res.json(users);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -42,6 +42,33 @@ export const createUser = async (req, res) => {
     });
     res.json(newUser);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export const updateUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { username, password, firstName, lastName, email, age, gender } =
+      req.body;
+
+    const user = await User.findByPk(userId);
+
+    user.set(req.body);
+    await user.save();
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  try {
+    const { userId } = Number(req.params);
+    const deletedUser = await User.destroy({ where: { id: userId } });
+    deletedUser.save();
+
+    return res.sendStatus(204);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
   }
 };
