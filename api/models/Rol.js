@@ -1,21 +1,11 @@
-import { DataTypes, Sequelize, Model } from "sequelize";
-import db from "../db";
+import { DataTypes } from "sequelize";
+import db from "../db/index.js";
 
-class User extends Model {}
-
-Rol.init(
-  {
-    // Model attributes are defined here
-    rol: {
-      type: DataTypes.ENUM(["user", "admin", "superAdmin"]),
-      allowNull: false,
-    },
+const Rol = db.define("roles", {
+  rol: {
+    type: DataTypes.ENUM(["user", "admin", "superadmin"]),
+    defaultValue: "user",
   },
-  {
-    // Other model options go here
-    sequelize: db,
-    modelName: "Rol",
-  }
-);
+});
 
-console.log(User === sequelize.models.User); // true
+export default Rol;

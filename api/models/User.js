@@ -1,50 +1,26 @@
-import { DataTypes, Model } from "sequelize";
-import db from "../db";
+import { DataTypes } from "sequelize";
+import db from "../db/index.js";
+import Rol from "./Rol.js";
 
-class User extends Model {}
+const User = db.define("users", {
+  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+  username: { type: DataTypes.STRING, allowNull: false },
+  password: { type: DataTypes.STRING, allowNull: false },
+  firstName: { type: DataTypes.STRING, allowNull: false },
+  lastName: { type: DataTypes.STRING, allowNull: false },
+  email: { type: DataTypes.STRING, allowNull: false },
+  age: { type: DataTypes.INTEGER, allowNull: false },
+  gender: { type: DataTypes.ENUM("male", "female"), allowNull: false },
+});
 
-User.init(
-  {
-    // Model attributes are defined here
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    password: {
-      type: DataTypes.VIRTUAL,
-      allowNull: false,
-    },
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    age: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    gender: {
-      type: DataTypes.ENUM,
-      values: ["male", "female"],
-      allowNull: false,
-    },
-    favoriteList: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: true,
-    },
-  },
-  {
-    // Other model options go here
-    sequelize: db, // We need to pass the connection instance
-    modelName: "User", // We need to choose the model name
-  }
-);
+User.hasOne(Rol, {
+  foreignKey: "rolId",
+  sourceKey: "id",
+});
+/* 
+Rol.belongsTo(User, {
+  foreignKey: "userId",
+  targetId: "id",
+}); */
 
-console.log(User === sequelize.models.User); // true
+export default User;
